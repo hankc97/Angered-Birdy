@@ -18,7 +18,7 @@ MVP & Functionality
 Architecture and Technologies
 * Canvas to display graphics and interactions
 * Node for game logic interactions
-* firebase to store points and game logic
+* localstorage to store points and game logic
 Scripts
 * Canvas.js: Handles Boundaries / Platform and background image 
 * Game.js: Handles kickoff and main update loop logic
