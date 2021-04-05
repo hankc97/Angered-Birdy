@@ -10,7 +10,10 @@ MVP
 * Local Storage for score and highscore
 * Projectile Launch objects
 
-
+Technologies
+* Canvas
+* Node
+* local storage or firebase
 
 
 ```
