@@ -1,80 +1,70 @@
 import "./styles/index.scss";
-import "./images/yoda-stitch.jpg";
-import canvasExample from "./scripts/canvas";
-import Square from "./scripts/square";
-import { DOMExample } from "./scripts/DOMExample";
+import Canvas from "./scripts/canvas";
+import Projectile from "./scripts/projectile";
+import StageLoader from "./scripts/stageLoader";
+
 const currentStateObj = {
   currentExample: null,
   currentEventListeners: [],
 };
 
-document.querySelector("#canvas-demo").addEventListener("click", startCanvas);
-document.querySelector("#DOM-demo").addEventListener("click", startDOM);
-
-function startDOM() {
-  unregisterEventListeners();
-  clearDemo();
-  currentStateObj.currentExample = "DOMDEMO";
-  DOMExample();
-}
+document.querySelector("#canvas").addEventListener("click", startCanvas);
 
 function startCanvas() {
-  clearDemo();
-  unregisterEventListeners();
-  currentStateObj.currentExample = "CANVASDEMO";
-  const canvas = new canvasExample();
-  canvas.createCanvas();
-  const squares = [new Square(canvas.ctx, canvas.coords, canvas.fillColor)];
+    unregisterEventListeners();
+    const canvas = new Canvas();
+    canvas.createCanvas();
+    const projectile = new Projectile(canvas.ctx)
+    const stageLoader = new StageLoader()
 
-  let animating = true;
+    let animating = true;
 
-  const animation = () => {
-    canvas.clearCanvas();
-    if (animating) squares.forEach((sq) => sq.updateSquare(canvas.fillColor));
-    squares.forEach((sq) => sq.drawSquare());
+    const animation = () => {
+        canvas.clearCanvas();
+        if (animating) {
+            stageLoader.animate(canvas.ctx)
+            projectile.animate(canvas.ctx, stageLoader.pigs)
+            document.querySelector("#launch-button").addEventListener("click", projectile.launch)
+            
+            window.requestAnimationFrame(animation);
+        }
+    };
+
     window.requestAnimationFrame(animation);
-    squares.forEach((sq) => {
-      if (sq.coords[0] + sq.coords[2] > window.innerWidth)
-        sq.reverseAnimation();
-      if (sq.coords[0] < 0) sq.reverseAnimation();
-    });
-  };
 
-  window.requestAnimationFrame(animation);
+    //   window.addEventListener("keydown", handleKeyDown);
+    //   currentStateObj.currentEventListeners.push([
+    //     "window",
+    //     "keydown",
+    //     handleKeyDown,
+    //   ]);
 
-  window.addEventListener("keydown", handleKeyDown);
-  currentStateObj.currentEventListeners.push([
-    "window",
-    "keydown",
-    handleKeyDown,
-  ]);
+    //   window.addEventListener("mousedown", handleMouseDown);
+    //   currentStateObj.currentEventListeners.push([
+    //     "window",
+    //     "mousedown",
+    //     handleMouseDown,
+    //   ]);
 
-  window.addEventListener("mousedown", handleMouseDown);
-  currentStateObj.currentEventListeners.push([
-    "window",
-    "mousedown",
-    handleMouseDown,
-  ]);
+    //   function handleKeyDown(event) {
+    //     if (event.which === 32) {
+    //       event.preventDefault();
+    //       squares.forEach((sq) => sq.reverseAnimation());
+    //       canvas.setColor(`#${Math.floor(Math.random() * 16777215).toString(16)}`);
+    //     }
+    //   }
 
-  function handleKeyDown(event) {
-    if (event.which === 32) {
-      event.preventDefault();
-      squares.forEach((sq) => sq.reverseAnimation());
-      canvas.setColor(`#${Math.floor(Math.random() * 16777215).toString(16)}`);
-    }
-  }
-
-  function handleMouseDown(event) {
-    event.preventDefault();
-    squares.push(
-      new Square(
-        canvas.ctx,
-        canvas.coords.map((co) => co + 25),
-        canvas.fillColor
-      )
-    );
-    // animating = !animating;
-  }
+    //   function handleMouseDown(event) {
+    //     event.preventDefault();
+    //     squares.push(
+    //       new Square(
+    //         canvas.ctx,
+    //         canvas.coords.map((co) => co + 25),
+    //         canvas.fillColor
+    //       )
+    //     );
+        // animating = !animating;
+    //   }
 }
 
 function unregisterEventListeners() {
