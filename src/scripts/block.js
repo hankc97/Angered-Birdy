@@ -238,7 +238,6 @@ class Block {
         this.applyForce(vac.along, pointDetails.pos)    
         this.applyForce(vac.tangent, pointDetails.pos)    
     }
-
 }
 
 export default Block

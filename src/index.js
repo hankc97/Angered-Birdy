@@ -23,9 +23,8 @@ function startCanvas() {
         canvas.clearCanvas();
         if (animating) {
             stageLoader.animate(canvas.ctx)
-            projectile.animate(canvas.ctx, stageLoader.pigs)
+            projectile.animate(canvas.ctx, stageLoader.pigs, stageLoader.blocks)
             document.querySelector("#launch-button").addEventListener("click", projectile.launch)
-            
             window.requestAnimationFrame(animation);
         }
     };

@@ -33,8 +33,8 @@ class StageLoader {
         for (let i = 0; i < this.pigs.length; i++) {
             this.pigs[i].animate(ctx);
         }
+        
         this.drawBlocks(ctx);
-
         for (let i = 0; i < this.blocks.length; i++) {
             this.blocks[i].animate(ctx);
         }
