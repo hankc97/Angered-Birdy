@@ -1,5 +1,5 @@
 class Block {
-    constructor(ctx, x, y, w = 40, h = 100) {
+    constructor(ctx, x, y, w = 30, h = 100) {
         this._ctx = ctx;
         this.x = x;
         this.y = y;

@@ -8,15 +8,45 @@ const currentStateObj = {
   currentEventListeners: [],
 };
 
+let x, y;
+let deltaX, deltaY;
+const centerX = 134;
+const centerY = 271;
+
 document.querySelector("#canvas").addEventListener("click", startCanvas);
 
 function startCanvas() {
     unregisterEventListeners();
     const canvas = new Canvas();
     canvas.createCanvas();
+    const canvasObj = canvas.canvas;
+    let canvasPosition = canvasObj.getBoundingClientRect()
     const projectile = new Projectile(canvas.ctx)
 
+    const mouse = {
+      x: canvas.width/2,
+      y: canvas.height/2,
+      click: false,
+    }
     
+    canvasObj.addEventListener('mousedown', function(e) {
+      mouse.x = e.x - canvasPosition.left;
+      mouse.y = e.y - canvasPosition.top;
+
+    })
+
+    canvasObj.addEventListener('mouseup', function(e){
+      mouse.x = e.x - canvasPosition.left;
+      mouse.y = e.y - canvasPosition.top;
+
+      deltaX = mouse.x - centerX;
+      deltaY = mouse.y - centerY;
+      console.log(Math.abs(mouse.x - 130))
+      let thetaRadian = Math.atan2(deltaY, deltaX);
+      let degrees = -((Math.abs(thetaRadian * 180 / Math.PI) - 270) % 90);
+      // console.log(degrees)
+      projectile.launch(degrees , Math.abs(mouse.x - 130))
+    })
 
     const stageLoader = new StageLoader()
 
@@ -25,13 +55,14 @@ function startCanvas() {
     const animation = () => {
         canvas.clearCanvas();
         if (animating) {
+            
             let img = new Image();
             img.src = "src/images/pixil-layer-Background.png";
-            canvas.ctx.drawImage(img,3,10);
-
+            canvas.ctx.drawImage(img,90,350);
             stageLoader.animate(canvas.ctx)
             projectile.animate(canvas.ctx, stageLoader.pigs, stageLoader.blocks)
-            document.querySelector("#launch-button").addEventListener("click", projectile.launch)
+            // document.querySelector("#launch-button").addEventListener("click", projectile.launch)
+
             window.requestAnimationFrame(animation);
         }
     };

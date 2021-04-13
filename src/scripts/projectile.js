@@ -12,11 +12,11 @@ class Projectile {
         this.currentBird;
     }
 
-    launch() {
-        let angle = Math.PI* 40.0 /180;
-        let magnitude = 20.0;
+    launch(angleVal, magVal) {
+        let angle = Math.PI* angleVal /180;
+        let magnitude = magVal;
 
-        const objLaunch = new ObjectLaunch(this._ctx, 100, 600, new Bird(this._ctx));
+        const objLaunch = new ObjectLaunch(this._ctx, 100, 650, new Bird(this._ctx));
         this.birdObjects.push(objLaunch);
         objLaunch.velY =- magnitude * Math.sin(angle);
         objLaunch.velX = magnitude * Math.cos(angle);
