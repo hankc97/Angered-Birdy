@@ -15,6 +15,9 @@ function startCanvas() {
     const canvas = new Canvas();
     canvas.createCanvas();
     const projectile = new Projectile(canvas.ctx)
+
+    
+
     const stageLoader = new StageLoader()
 
     let animating = true;
@@ -22,6 +25,10 @@ function startCanvas() {
     const animation = () => {
         canvas.clearCanvas();
         if (animating) {
+            let img = new Image();
+            img.src = "src/images/pixil-layer-Background.png";
+            canvas.ctx.drawImage(img,3,10);
+
             stageLoader.animate(canvas.ctx)
             projectile.animate(canvas.ctx, stageLoader.pigs, stageLoader.blocks)
             document.querySelector("#launch-button").addEventListener("click", projectile.launch)
@@ -65,6 +72,7 @@ function startCanvas() {
         // animating = !animating;
     //   }
 }
+
 
 function unregisterEventListeners() {
   while (currentStateObj.currentEventListeners.length) {

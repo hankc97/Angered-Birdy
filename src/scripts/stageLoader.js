@@ -2,7 +2,7 @@ import Pig from "./pig";
 import Block from "./block";
 
 class StageLoader {
-    constructor( numberOfPigs = 2, pigsLocationArray = [[200, 600], [500, 600]], numberofBlocks = 2, blockLocationArray = [[900, 700], [1300, 400]]) {
+    constructor( numberOfPigs = 2, pigsLocationArray = [[500, 600], [600, 600]], numberofBlocks = 2, blockLocationArray = [[350, 700], [700, 700]]) {
         this.numberOfPigs = numberOfPigs;
         this.pigsLocationArray = pigsLocationArray;
         this.pigs = [];

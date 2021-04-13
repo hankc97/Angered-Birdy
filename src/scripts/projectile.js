@@ -13,10 +13,10 @@ class Projectile {
     }
 
     launch() {
-        let angle = Math.PI*60.0/180;
-        let magnitude = 25.5;
+        let angle = Math.PI* 40.0 /180;
+        let magnitude = 20.0;
 
-        const objLaunch = new ObjectLaunch(this._ctx, 5, 690, new Bird(this._ctx));
+        const objLaunch = new ObjectLaunch(this._ctx, 100, 600, new Bird(this._ctx));
         this.birdObjects.push(objLaunch);
         objLaunch.velY =- magnitude * Math.sin(angle);
         objLaunch.velX = magnitude * Math.cos(angle);
@@ -31,19 +31,6 @@ class Projectile {
         if (this.cont) {
             this.launch()
         }
-        ctx.beginPath();
-        ctx.fillStyle = "#555";
-        ctx.moveTo(0,700)
-        ctx.lineTo(10,680)
-        ctx.lineTo(15,690)
-        ctx.lineTo(0,700)
-        ctx.closePath();
-        ctx.fill();
-        ctx.beginPath();
-        ctx.fillStyle = "#0f0";
-        ctx.arc(this.target,701,10,0,Math.PI*2,true);
-        ctx.closePath();
-
         for (let i = 0; i < this.birdObjects.length; i++) {
             let currentBird = this.birdObjects[i]
             // if (this.currentBird._y + this.currentBird.type.radius >= 700) {
