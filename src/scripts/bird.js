@@ -11,14 +11,21 @@ class Bird {
         this._gravity = { x: 0, y: 0.1 };
         this._ground = this._ctx.canvas.height;
         this._bounce = 1.3;
+        this.bird = new Image();
+        this.bird.src = "src/images/bird.png"
     }
 
     drawBird(ctx, x, y) {
-        ctx.fillStyle = this._color;
+        // ctx.drawImage(this.bird, 0, 0, 10, 10, x, y, 10, 10)
+        // ctx.fillStyle = this._color;
+        ctx.save();
         ctx.beginPath();
         ctx.arc(x, y, this._radius, 0, (Math.PI * 2), false);
+        ctx.clip();
         ctx.closePath();
-        ctx.fill();
+        ctx.drawImage(this.bird, x - this._radius, y - this._radius, this._radius * 2, this._radius * 2)
+        ctx.restore();
+        // ctx.fill();
     }
 
     updateBird() {

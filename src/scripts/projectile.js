@@ -73,6 +73,8 @@ class ObjectLaunch {
         this._frictionX = 0.9;
         this._mass = 2;
         this.radius = 14;
+        // this.bird = new Image();
+        // this.bird.src = "/src/images/bird.png"
     }
 
     remove() {
