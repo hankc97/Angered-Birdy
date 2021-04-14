@@ -12,7 +12,7 @@ class Bird {
         this._ground = this._ctx.canvas.height;
         this._bounce = 1.3;
         this.bird = new Image();
-        this.bird.src = "src/images/bird.png"
+        this.bird.src = "src/images/birds.png"
     }
 
     drawBird(ctx, x, y) {

@@ -1,8 +1,8 @@
 class Canvas {
     constructor() {
         this.canvas = document.createElement("canvas");
-        this.canvas.width = window.innerWidth - 400;
-        this.canvas.height = this.canvas.width / 2;
+        this.canvas.width = 1400;
+        this.canvas.height = 750;
         this.ctx = this.canvas.getContext("2d");
     }
     createCanvas() {

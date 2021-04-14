@@ -14,14 +14,23 @@ class Pig {
         this._bounce = 0.4;
         this._frictionX = 0.9;
         this._mass = 2;
+        this.pig = new Image();
+        this.pig.src = "src/images/peppa.png"
     }
 
     drawPig(ctx) {
-        ctx.fillStyle = this._color;
+        ctx.save();
         ctx.beginPath();
         ctx.arc(this.x, this.y, this._radius, 0, (Math.PI * 2), false);
+        ctx.clip();
         ctx.closePath();
-        ctx.fill();
+        ctx.drawImage(this.pig, this.x - this._radius, this.y - this._radius, this._radius * 2, this._radius * 2);
+        ctx.restore();
+        // ctx.fillStyle = this._color;
+        // ctx.beginPath();
+        // ctx.arc(this.x, this.y, this._radius, 0, (Math.PI * 2), false);
+        // ctx.closePath();
+        // ctx.fill();
     }
 
     updatePig() {
