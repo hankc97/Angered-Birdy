@@ -5,6 +5,7 @@ class Canvas {
         this.canvas.height = 750;
         this.ctx = this.canvas.getContext("2d");
     }
+
     createCanvas() {
         document.body.append(this.canvas);
         this.canvas.classList.add("main-canvas")

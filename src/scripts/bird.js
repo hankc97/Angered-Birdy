@@ -16,8 +16,6 @@ class Bird {
     }
 
     drawBird(ctx, x, y) {
-        // ctx.drawImage(this.bird, 0, 0, 10, 10, x, y, 10, 10)
-        // ctx.fillStyle = this._color;
         ctx.save();
         ctx.beginPath();
         ctx.arc(x, y, this._radius, 0, (Math.PI * 2), false);
@@ -25,7 +23,6 @@ class Bird {
         ctx.closePath();
         ctx.drawImage(this.bird, x - this._radius, y - this._radius, this._radius * 2, this._radius * 2)
         ctx.restore();
-        // ctx.fill();
     }
 
     updateBird() {

@@ -26,11 +26,6 @@ class Pig {
         ctx.closePath();
         ctx.drawImage(this.pig, this.x - this._radius, this.y - this._radius, this._radius * 2, this._radius * 2);
         ctx.restore();
-        // ctx.fillStyle = this._color;
-        // ctx.beginPath();
-        // ctx.arc(this.x, this.y, this._radius, 0, (Math.PI * 2), false);
-        // ctx.closePath();
-        // ctx.fill();
     }
 
     updatePig() {

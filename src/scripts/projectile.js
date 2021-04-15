@@ -1,12 +1,11 @@
 import Bird from "./bird";
 
 class Projectile {
-    constructor(ctx) {
+    constructor(ctx, score) {
         this._ctx = ctx;
-        this.cont = false;
+        this.score = 0;
 
         this.launch = this.launch.bind(this)
-        this.target = Math.random()*700+20;
         this.birdObjects = [];
         this.max = 1;
         this.currentBird;
@@ -28,26 +27,16 @@ class Projectile {
             this.birdObjects[0].remove();
             this.birdObjects = this.birdObjects.splice(1);
         }
-        if (this.cont) {
-            this.launch()
-        }
         for (let i = 0; i < this.birdObjects.length; i++) {
             let currentBird = this.birdObjects[i]
-            // if (this.currentBird._y + this.currentBird.type.radius >= 700) {
-            //     if (this.bounce) {
-            //         this.currentBird.velY *= this.currentBird.transfer;
-            //     } else {
-            //         this.currentBird.velX = 0;
-            //         this.currentBird.velY = 0;
-            //     }
-            // }
+            
             currentBird.velY += 1.53;
             currentBird._x += currentBird.velX / 3;
             currentBird._y += currentBird.velY / 3;
             if (currentBird._y + currentBird.type.radius > 700) {
                 currentBird._y = 700 - currentBird.type.radius;
             }
-            currentBird.updateObject(pigs, blocks)
+            currentBird.updateObject(pigs, blocks, this.score)
             currentBird.drawObjectLaunch(this._ctx);
         }
     }
@@ -73,8 +62,9 @@ class ObjectLaunch {
         this._frictionX = 0.9;
         this._mass = 2;
         this.radius = 14;
-        // this.bird = new Image();
-        // this.bird.src = "/src/images/bird.png"
+
+        this.birdOnPigCollisionPoints = 5500;
+        this.birdOnBlockCollisionPoints = 325;
     }
 
     remove() {
@@ -82,10 +72,11 @@ class ObjectLaunch {
     }
 
     drawObjectLaunch(ctx) {
-        this.type.drawBird(ctx, this._x, this._y)
+        this.type.drawBird(ctx, this._x, this._y);
+        // this.drawScore(ctx, 0)
     }
 
-    checkBirdOnPigCollision(pigs) {
+    checkBirdOnPigCollision(pigs, score) {
         if (pigs) {
             for (let i = 0; i < pigs.length; i++) {
                 if (this._x + this.type._radius + pigs[i]._radius > pigs[i].x
@@ -100,34 +91,34 @@ class ObjectLaunch {
                     )
 
                     if (distance < this.type._radius + pigs[i]._radius) {
-                        this.birdOnPigCollisionLogic(pigs[i])
+                        this.birdOnPigCollisionLogic(pigs[i], score)
                     }
                 }
             }
         }
     }
 
-    checkBirdOnBlockCollision(blocks) {
+    checkBirdOnBlockCollision(blocks, score) {
         if (blocks) {
             for (let i = 0; i < blocks.length; i++) {
                 for (let j = 0; j < 4; j++){
                     const circleCenter = [this._x, this._y];
                     if (j + 1 === 4) {
                         if (this.checkBirdInterceptBlock(blocks[i].getPoint(j), blocks[i].getPoint(0), circleCenter, this.radius)) {
-                            this.birdOnBlockCollisionLogic(blocks[i])
+                            this.birdOnBlockCollisionLogic(blocks[i], score)
                         }
                     } else {
                         if (this.checkBirdInterceptBlock(blocks[i].getPoint(j), blocks[i].getPoint(j + 1), circleCenter, this.radius)) {
-                            this.birdOnBlockCollisionLogic(blocks[i])
+                            this.birdOnBlockCollisionLogic(blocks[i], score)
                         }
                     }
                 }
-                // if (checkBirdInterceptBlock(blocks[i]))
             }
         }
     }
 
-    birdOnPigCollisionLogic(pig) {
+    birdOnPigCollisionLogic(pig, score) {
+        score += this.birdOnPigCollisionPoints;
         const mass1 = this.type._radius;
         const mass2 = pig._radius;
         if (pig.velX === 0) pig.velX = 9;
@@ -152,7 +143,8 @@ class ObjectLaunch {
         pig.y += pig.velY;
     }
 
-    birdOnBlockCollisionLogic(block) {
+    birdOnBlockCollisionLogic(block, score) {
+        score += this.birdOnBlockCollisionPoints;
         this.velX = -this.velX;
         this.velY = -this.velY;
 
@@ -177,9 +169,9 @@ class ObjectLaunch {
         return dist < radius * radius;
     }
 
-    updateObject(pigs, blocks) {
-        this.checkBirdOnPigCollision(pigs)
-        this.checkBirdOnBlockCollision(blocks)
+    updateObject(pigs, blocks, score) {
+        this.checkBirdOnPigCollision(pigs, score)
+        this.checkBirdOnBlockCollision(blocks, score)
         this.velX += this._gravity.x;
         this.velY += this._gravity.y;
         this._x += this.velX;
