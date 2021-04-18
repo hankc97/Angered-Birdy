@@ -4,9 +4,14 @@ class Canvas {
         this.canvas.width = 1400;
         this.canvas.height = 750;
         this.ctx = this.canvas.getContext("2d");
+        this.bindCanvasToDOM()
     }
 
-    createCanvas() {
+    bindCanvasToDOM() {
+        if (document.querySelector(".main-canvas") !== null) {
+            this.clearCanvas();
+            return;
+        }
         document.body.append(this.canvas);
         this.canvas.classList.add("main-canvas")
     }

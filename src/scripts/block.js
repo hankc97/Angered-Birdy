@@ -1,6 +1,7 @@
 class Block {
-    constructor(ctx, x, y, w = 30, h = 100) {
-        this._ctx = ctx;
+    constructor(ctx, x, y, w, h) {
+        this.ctx = ctx;
+        this.canvas = ctx.canvas;
         this.x = x;
         this.y = y;
         this.w = w;
@@ -14,16 +15,25 @@ class Block {
         this.PI90 = Math.PI / 2;
         this.PI2 = Math.PI * 2;
         this.WALL_NORMS = [ Math.PI / 2, Math.PI, -(Math.PI / 2), 0]
-        this._ground = this._ctx.canvas.height - 105;
+        this._ground = this.canvas.height - 105;
         this.mass = this.getMass()
     }
 
-    animate(ctx) {
-        ctx.save()
-        ctx.setTransform(1, 0, 0, 1, 0, 0);
-        this.updateBlock();
-        this.drawBlock(ctx);
-        ctx.restore()
+    render() {
+        this.ctx.save()
+        this.ctx.setTransform(1,0,0,1,this.x,this.y);
+        this.ctx.rotate(this.r);
+        this.ctx.fillStyle = "Blue";
+        this.ctx.fillRect(-this.w/2, -this.h/2, this.w, this.h)
+        this.ctx.strokeRect(-this.w/2, -this.h/2, this.w, this.h)
+        this.ctx.restore()
+    }
+
+    update() {
+        this.x += this.dx;
+        this.y += this.dy;
+        this.dy += 0.061;
+        this.r += this.dr;
 
         for(let i = 0; i < 4; i++){
             var p = this.getPoint(i);
@@ -32,16 +42,16 @@ class Block {
                 this.x += (this.INSET) - p.pos.x;
                 this.doCollision(p,3)
             }
-            else if( p.pos.x > ctx.canvas.width-this.INSET){
-                this.x += (ctx.canvas.width - this.INSET) - p.pos.x;
+            else if( p.pos.x > this.canvas.width-this.INSET){
+                this.x += (this.canvas.width - this.INSET) - p.pos.x;
                 this.doCollision(p,1)
             }
             else if(p.pos.y < this.INSET){
                 this.y += (this.INSET) - p.pos.y;
                 this.doCollision(p,0)
             }
-            else if( p.pos.y > ctx.canvas.height - this.INSET){
-                this.y += (ctx.canvas.height - this.INSET) - p.pos.y;
+            else if( p.pos.y > this.canvas.height - this.INSET){
+                this.y += (this.canvas.height - this.INSET) - p.pos.y;
                 this.doCollision(p,2)
             }
         }
@@ -49,25 +59,6 @@ class Block {
 
     getMass() {
         return ( this.w * this.h * this.h) / 1000;
-    }
-
-    drawBlock(ctx) {
-        ctx.setTransform(1,0,0,1,this.x,this.y);
-        ctx.rotate(this.r);
-        ctx.fillStyle = "Blue";
-        ctx.fillRect(-this.w/2, -this.h/2, this.w, this.h)
-        ctx.strokeRect(-this.w/2, -this.h/2, this.w, this.h)
-    }
-
-    updateBlock() {
-        this.x += this.dx;
-        this.y += this.dy;
-        this.dy += 0.061;
-        this.r += this.dr;
-
-        // if (this.y >= this._ground) {
-        //     this.y = this._ground 
-        // }
     }
 
     getPoint(which) {

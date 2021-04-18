@@ -1,26 +1,25 @@
-export const birdOnPigCollisionLogic = (pig, score) => {
-    score += this.birdOnPigCollisionPoints;
-    const mass1 = this.type._radius;
-    const mass2 = pig._radius;
-    if (pig.velX === 0) pig.velX = 9;
+export const birdOnPigCollisionLogic = (currentProjectileObject, pig) => {
+    let newVelX1 = (currentProjectileObject.velX * (currentProjectileObject.mass - pig.mass) + ( 2 * pig.mass * pig.velX)) / (currentProjectileObject.mass + pig.mass);
+    let newVelY1 = (currentProjectileObject.velY * (currentProjectileObject.mass - pig.mass) + ( 2 * pig.mass * pig.velY)) / (currentProjectileObject.mass + pig.mass);
+    let newVelX2 = (pig.velX * (pig.mass - currentProjectileObject.mass) + (2 * currentProjectileObject.mass * currentProjectileObject.velX)) / (currentProjectileObject.mass + pig.mass);
+    let newVelY2 = (pig.velY * (pig.mass - currentProjectileObject.mass) + (2 * currentProjectileObject.mass * currentProjectileObject.velY)) / (currentProjectileObject.mass + pig.mass);
 
-    this.velX = -this.velX;
-    this.velY = -this.velY;
-    pig.velX = -pig.velX;
-    pig.velY = -pig.velY;
+    currentProjectileObject.velX = -currentProjectileObject.velX;
+    currentProjectileObject.velY = -currentProjectileObject.velY;
+    pig.velX = newVelX2;
+    pig.velY = newVelY2;
 
-    this._x += this.velX;
-    this._y += this.velY;
-    pig.x += pig.velX;
-    pig.y += pig.velY;
+    currentProjectileObject.x = currentProjectileObject.x + newVelX1;
+    currentProjectileObject.y = currentProjectileObject.y + newVelY1;
+    pig.x = pig.x + newVelX2;
+    pig.y = pig.y + newVelY2;
 }
 
-export const birdOnBlockCollisionLogic = (block, score) => {
-    score += this.birdOnBlockCollisionPoints;
-    this.velX = -this.velX;
-    this.velY = -this.velY;
-
-    this._x += this.velX;
-    this._y += this.velY;
+export const birdOnBlockCollisionLogic = (currentProjectileObject, block) => {
+    currentProjectileObject.velX = -currentProjectileObject.velX;
+    currentProjectileObject.velY = -currentProjectileObject.velY;
+    let force = block.asPolar(block.vector(10, 10));
+    force.mag *= block.mass * 0.1;
+    block.applyForce(force, block.vector(currentProjectileObject.x, currentProjectileObject.y));
 }
 

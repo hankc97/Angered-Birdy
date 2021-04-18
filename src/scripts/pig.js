@@ -1,51 +1,50 @@
 class Pig {
-    constructor(ctx, x, y, velX = 0, velY = 0, radius = 15, color = "ORANGE") {
-        this._ctx = ctx;
-        this.x = x;
+    constructor(ctx, x, y, radius, velX = 0, velY = 0) {
+        this.ctx = ctx;
+        this.x = x; 
         this.y = y;
         this.velX = velX;
         this.velY = velY;
-        this._radius = radius;
-        this._mass = 2;
-        this._color = color;
+        this.radius = radius;
+        this.mass = 2;
 
-        this._gravity = { x: 0, y: 0.1 };
-        this._ground = this._ctx.canvas.height - 20;
-        this._bounce = 0.4;
-        this._frictionX = 0.9;
-        this._mass = 2;
+        this.gravity = { x: 0, y: 0.1 };
+        this.ground = this.ctx.canvas.height - 20;
+        this.bounce = 0.4;
+        this.frictionX = 0.9;
+        this.mass = 2;
         this.pig = new Image();
         this.pig.src = "src/images/peppa.png"
     }
 
-    drawPig(ctx) {
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this._radius, 0, (Math.PI * 2), false);
-        ctx.clip();
-        ctx.closePath();
-        ctx.drawImage(this.pig, this.x - this._radius, this.y - this._radius, this._radius * 2, this._radius * 2);
-        ctx.restore();
+    render() {
+        this.ctx.save();
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y, this.radius, 0, (Math.PI * 2), false);
+        this.ctx.clip();
+        this.ctx.closePath();
+        this.ctx.drawImage(this.pig, this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2);
+        this.ctx.restore();
     }
 
-    updatePig() {
-        this.velX += this._gravity.x;
-        this.velY += this._gravity.y;
+    update() {
+        this.velX += this.gravity.x;
+        this.velY += this.gravity.y;
         this.x += this.velX;
         this.y += this.velY;
-
-        if (this.y >= this._ground) {
-            this.y = this._ground - (this.y - this._ground);
-            this.velY = -Math.abs(this.velY) * this._bounce;
-            if (this.velY >= this._gravity.y) {
+        
+        if (this.y >= this.ground) {
+            this.y = this.ground - (this.y - this.ground);
+            this.velY = -Math.abs(this.velY) * this.bounce;
+            if (this.velY >= this.gravity.y) {
                 this.velY = 0;
-                this.y = this._ground - this._gravity.y;
+                this.y = this.ground - this.gravity.y;
             }
             if (this.velX > 0) {
-                this.velX -= this._frictionX;
+                this.velX -= this.frictionX;
             }
             if (this.velX < 0) {
-                this.velX += this._frictionX;
+                this.velX += this.frictionX;
             }
         }
         // stops ball from bouncing in Y axis
@@ -56,11 +55,6 @@ class Pig {
         if (Math.abs(this.velX) < 1.1) {
             this.velX = 0;
         }
-    }
-
-    animate(ctx) {
-        this.updatePig();
-        this.drawPig(ctx);
     }
 }
 

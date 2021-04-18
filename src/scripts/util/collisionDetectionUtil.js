@@ -1,45 +1,34 @@
-export const checkBirdOnPigCollision = (pigs, score) => {
-    if (pigs) {
-        for (let i = 0; i < pigs.length; i++) {
-            if (this._x + this.type._radius + pigs[i]._radius > pigs[i].x
-                && this._x < pigs[i].x + this.type._radius + pigs[i]._radius
-                && this._y + this.type._radius + pigs[i]._radius > pigs[i].y
-                && this._y < pigs[i].y + this.type._radius + pigs[i]._radius) 
-            {
-                // pythagoream theorem to be more exact on collision
-                let distance = Math.sqrt(
-                      ((this._x - pigs[i].x) * (this._x - pigs[i].x))
-                    + ((this._y - pigs[i].y) * (this._y - pigs[i].y))
-                )
+export const checkBirdOnPigCollision = (currentProjectileObject, pig) => {
+    if (currentProjectileObject.x + currentProjectileObject.radius + pig.radius > pig.x
+        && currentProjectileObject.x < pig.x + currentProjectileObject.radius + pig.radius
+        && currentProjectileObject.y + currentProjectileObject.radius + pig.radius > pig.y
+        && currentProjectileObject.y < pig.y + currentProjectileObject.radius + pig.radius) 
+    {
+        // pythagoream theorem to be more exact on collision
+        let distance = Math.sqrt(
+                ((currentProjectileObject.x - pig.x) * (currentProjectileObject.x - pig.x))
+            + ((currentProjectileObject.y - pig.y) * (currentProjectileObject.y - pig.y))
+        )
+        return distance < currentProjectileObject.radius + pig.radius; 
+    }
+}
 
-                if (distance < this.type._radius + pigs[i]._radius) {
-                    this.birdOnPigCollisionLogic(pigs[i], score)
-                }
+export const checkBirdOnBlockCollision = (currentProjectileObject, block) => {
+    for (let j = 0; j < 4; j++){
+        const circleCenter = [currentProjectileObject.x, currentProjectileObject.y];
+        if (j + 1 === 4) {
+            if (checkBirdInterceptBlock(block.getPoint(j), block.getPoint(0), circleCenter, currentProjectileObject.radius)) {
+                return true;
+            }
+        } else {
+            if (checkBirdInterceptBlock(block.getPoint(j), block.getPoint(j + 1), circleCenter, currentProjectileObject.radius)) {
+                return true;
             }
         }
     }
 }
 
-export const checkBirdOnBlockCollision = (blocks, score) => {
-    if (blocks) {
-        for (let i = 0; i < blocks.length; i++) {
-            for (let j = 0; j < 4; j++){
-                const circleCenter = [this._x, this._y];
-                if (j + 1 === 4) {
-                    if (this.checkBirdInterceptBlock(blocks[i].getPoint(j), blocks[i].getPoint(0), circleCenter, this.radius)) {
-                        this.birdOnBlockCollisionLogic(blocks[i], score)
-                    }
-                } else {
-                    if (this.checkBirdInterceptBlock(blocks[i].getPoint(j), blocks[i].getPoint(j + 1), circleCenter, this.radius)) {
-                        this.birdOnBlockCollisionLogic(blocks[i], score)
-                    }
-                }
-            }
-        }
-    }
-}
-
-export const checkBirdInterceptBlock = (pointA, pointB, circleCenter, radius) => {
+const checkBirdInterceptBlock = (pointA, pointB, circleCenter, radius) => {
     let dist;
     const vel1X = pointB.pos.x - pointA.pos.x;
     const vel1Y = pointB.pos.y - pointA.pos.y;
