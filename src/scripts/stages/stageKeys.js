@@ -1,5 +1,6 @@
 export const stageKeys = {
     1 : {
+        "currentLevelHighScoreKey": "highScoreKeyLevel1",
         "numberOfPigs": 2,
         "pigProperties": {
             0 : {

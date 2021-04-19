@@ -11,11 +11,16 @@ class StageLoader {
         this.canvas = ctx.canvas;
         this.score = 0;
         this.stageNumber = 1;
-        // this.highscore using localStorage
         this.startPosBird = [];
         this.projectileObject = {};
         this.pigs = [];
         this.blocks = [];
+    }
+    
+    update() {
+        this.updateEntities();
+        if (this.projectileObject.objectLaunched) this.checkAndUpdateEntitiesCollision();
+        this.renderEntities();
     }
 
     initializeEventListeners() {
@@ -46,6 +51,14 @@ class StageLoader {
     loadStage(currentStageValues) {
         this.projectileObject = new Projectile(this.ctx, currentStageValues["birdProperties"]);
         this.startPosBird = [currentStageValues["birdProperties"].x, currentStageValues["birdProperties"].y]
+        this.currentLevelHighScoreKey = currentStageValues["currentLevelHighScoreKey"];
+
+        let highScoreSaveKeyString = localStorage.getItem(this.currentLevelHighScoreKey);
+        if (highScoreSaveKeyString === "undefined"){
+            this.highScore = 0;
+        } else {
+            this.highScore = parseInt(highScoreSaveKeyString);
+        }
 
         for (let i = 0; i < currentStageValues["numberOfPigs"]; i++) {
             this.pigs.push(new Pig(
@@ -65,12 +78,6 @@ class StageLoader {
         }
     }
 
-    update() {
-        this.updateEntities();
-        if (this.projectileObject.objectLaunched) this.checkAndUpdateEntitiesCollision();
-        this.renderEntities();
-    }
-
     updateEntities() {
         this.projectileObject.update()
         for (let i = 0; i < this.pigs.length; i++) {
@@ -78,6 +85,14 @@ class StageLoader {
         }
         for (let i = 0; i < this.pigs.length; i++) {
             this.blocks[i].update();
+        }
+        this.updateHighScore()
+    }
+
+    updateHighScore() {
+        if (this.score > this.highScore) {
+            this.highScore = this.score;
+            localStorage.setItem(this.currentLevelHighScoreKey, this.highScore);
         }
     }
 
@@ -105,6 +120,7 @@ class StageLoader {
             this.blocks[i].render();
         }
         this.renderScore();
+        this.renderHighScore();
     }
 
     renderScore() { 
@@ -114,7 +130,31 @@ class StageLoader {
         this.ctx.strokeStyle = "BLACK";
         this.ctx.font = 50 + "px Bangers";
         this.ctx.fillText(this.score, this.canvas.width - 30 / 2, 0)
-        this.ctx.strokeText(this.score, this.canvas.width - 30 / 2, 0)
+        this.ctx.strokeText(this.score, this.canvas.width - 30 / 2, 0);
+
+        this.ctx.textAlign = "right";
+        this.ctx.textBaseline = "top";
+        this.ctx.fillStyle = "WHITE";
+        this.ctx.strokeStyle = "BLACK";
+        this.ctx.font = 50 + "px Bangers";
+        this.ctx.strokeText("Score:                      ", this.canvas.width - 30 / 2, 0);
+    }
+
+    renderHighScore() {
+        this.ctx.textAlign = "right";
+        this.ctx.textBaseline = "top";
+        this.ctx.fillStyle = "WHITE";
+        this.ctx.strokeStyle = "BLACK";
+        this.ctx.font = 50 + "px Bangers";
+        this.ctx.fillText(this.highScore, this.canvas.width - 30 / 2, 60);
+        this.ctx.strokeText(this.highScore, this.canvas.width - 30 / 2, 60);
+
+        this.ctx.textAlign = "right";
+        this.ctx.textBaseline = "top";
+        this.ctx.fillStyle = "WHITE";
+        this.ctx.strokeStyle = "BLACK";
+        this.ctx.font = 50 + "px Bangers";
+        this.ctx.strokeText("Highscore:                      ", this.canvas.width - 30 / 2, 60);
     }
 }
 
