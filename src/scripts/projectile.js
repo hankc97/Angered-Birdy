@@ -6,7 +6,7 @@ class Projectile {
         this.max = 1;
         this.birdProperties = birdProperties;
         this.projectileImage = new Image();
-        this.projectileImage.src = "src/images/pixil-layer-Background.png";
+        this.projectileImage.src = "src/images/slingS.png";
     }
 
     kickOffLaunchDirection(angleVal, magnitudeVal) {
@@ -34,7 +34,7 @@ class Projectile {
     }
 
     render() {
-        this.ctx.drawImage(this.projectileImage, this.birdProperties.x - 30, this.birdProperties.y - 70);
+        this.ctx.drawImage(this.projectileImage, this.birdProperties.x - 30, this.birdProperties.y - 70, 75, 140);
         for (let i = 0; i < this.launchedObjects.length; i++) {
             let currentBird = this.launchedObjects[i].objectType;
             currentBird.render();
@@ -77,6 +77,7 @@ class ObjectLaunch {
         if ( currentObject.y >= currentObject.ground - 10) {
             if (currentObject.velY <= 0 && currentObject.velY > -2.5) {
                 currentObject.velY = 0;
+                currentObject.state = "endState";
             }
         }
         // stops ball from moving on X axis 

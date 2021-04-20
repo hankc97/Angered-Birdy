@@ -54,7 +54,7 @@ class StageLoader {
         this.currentLevelHighScoreKey = currentStageValues["currentLevelHighScoreKey"];
 
         let highScoreSaveKeyString = localStorage.getItem(this.currentLevelHighScoreKey);
-        if (highScoreSaveKeyString === "undefined"){
+        if (highScoreSaveKeyString === null){
             this.highScore = 0;
         } else {
             this.highScore = parseInt(highScoreSaveKeyString);
@@ -121,6 +121,7 @@ class StageLoader {
         }
         this.renderScore();
         this.renderHighScore();
+        this.renderStageNumber();
     }
 
     renderScore() { 
@@ -155,6 +156,16 @@ class StageLoader {
         this.ctx.strokeStyle = "BLACK";
         this.ctx.font = 50 + "px Bangers";
         this.ctx.strokeText("Highscore:                      ", this.canvas.width - 30 / 2, 60);
+    }
+
+    renderStageNumber() {
+        this.ctx.textAlign = "left";
+        this.ctx.textBaseline = "top";
+        this.ctx.fillStyle = "WHITE";
+        this.ctx.strokeStyle = "BLACK";
+        this.ctx.font = 30 + "px Bangers";
+        this.ctx.fillText("Level " + this.stageNumber, 10, 10)
+        this.ctx.strokeText("Level " + this.stageNumber,  10, 10);
     }
 }
 

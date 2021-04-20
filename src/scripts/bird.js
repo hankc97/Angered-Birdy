@@ -13,7 +13,8 @@ class Bird {
         this.bounce = 0.5;
         this.frictionX = 0.9;
         this.bird = new Image();
-        this.bird.src = "src/images/birds.png"
+        this.bird.src = "src/images/angered-birdy.png"
+        this.state = "startState";
     }
 
     render() {

@@ -14,7 +14,6 @@ export const stageKeys = {
                 rad: 15,
             }
         },
-
         "numberOfBlocks": 2,
         "blockProperites": {
             0 : {
@@ -30,7 +29,6 @@ export const stageKeys = {
                 h: 140,
             }
         },
-
         "birdProperties": {
             x: 120,
             y: 630,

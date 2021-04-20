@@ -14,7 +14,8 @@ class Pig {
         this.frictionX = 0.9;
         this.mass = 2;
         this.pig = new Image();
-        this.pig.src = "src/images/peppa.png"
+        this.pig.src = "src/images/peppa.png";
+        this.state = "alive";
     }
 
     render() {
