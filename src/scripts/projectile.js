@@ -37,7 +37,7 @@ class Projectile {
     }
 
     render() {
-        this.ctx.drawImage(this.projectileImage, this.birdProperties.x - 30, this.birdProperties.y - 70, 75, 140);
+        this.ctx.drawImage(this.projectileImage, this.birdProperties.x - 30, this.birdProperties.y - 50, 75, 140);
         for (let i = 0; i < this.launchedObjects.length; i++) {
             let currentBird = this.launchedObjects[i].objectType;
             currentBird.render();

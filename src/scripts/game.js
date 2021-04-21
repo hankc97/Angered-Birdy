@@ -18,9 +18,11 @@ class AngeredBirds {
             if (this.animating) {
                 this.stageLoader.update();
                 this.interval = window.requestAnimationFrame(this.animation);
-                if (that.stageLoader.checkStageLost()) {
-                    that.gameOver();
-                }
+                if (that.stageLoader.checkStageWon()) {
+                    debugger
+                    that.winLevel()
+                };
+                if (that.stageLoader.checkStageLost()) that.gameOver();
             }
         }
         window.requestAnimationFrame(this.animation);
@@ -33,7 +35,9 @@ class AngeredBirds {
     }
 
     winLevel() {
-        // increase stageLoader.stageNumber += 1;
+        this.stageLoader.stageNumber += 1;
+        this.stageLoader.restartEntities();
+        this.stageLoader.initializeEntities();
     }
 
     gameOver() {

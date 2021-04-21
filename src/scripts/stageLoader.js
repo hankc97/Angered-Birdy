@@ -31,16 +31,17 @@ class StageLoader {
         }
 
         this.canvas.addEventListener('mouseup', function(e){
-            let canvasProperties = this.canvas.getBoundingClientRect();
-            mouse.x = e.x - canvasProperties.left;
-            mouse.y = e.y - canvasProperties.top;
-            let deltaX = mouse.x - this.startPosBird[0];
-            let deltaY = mouse.y - this.startPosBird[1];
-            let thetaRadian = Math.atan2(deltaY, deltaX);
-            let angleVal = -((Math.abs(thetaRadian * 180 / Math.PI) - 270) % 90);
-            let magnitudeVal = (Math.abs(mouse.x - 130) / 2);
-
-            this.projectileObject.kickOffLaunchDirection(angleVal , magnitudeVal)
+            if ((this.projectileObject.launchedObjects.length === 0) || this.projectileObject.currentProjectileObject.state === "endState"){
+                let canvasProperties = this.canvas.getBoundingClientRect();
+                mouse.x = e.x - canvasProperties.left;
+                mouse.y = e.y - canvasProperties.top;
+                let deltaX = mouse.x - this.startPosBird[0];
+                let deltaY = mouse.y - this.startPosBird[1];
+                let thetaRadian = Math.atan2(deltaY, deltaX);
+                let angleVal = -((Math.abs(thetaRadian * 180 / Math.PI) - 270) % 90);
+                let magnitudeVal = (Math.abs(mouse.x - 130) / 2);
+                this.projectileObject.kickOffLaunchDirection(angleVal , magnitudeVal)
+            }
         }.bind(this))
     }
 
@@ -193,6 +194,10 @@ class StageLoader {
 
     checkStageLost() {
         return this.projectileObject.lostAllProjectileObjects()
+    }
+
+    checkStageWon() {
+        return this.pigs.length === 0; 
     }
 }
 
