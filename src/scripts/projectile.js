@@ -7,6 +7,8 @@ class Projectile {
         this.birdProperties = birdProperties;
         this.projectileImage = new Image();
         this.projectileImage.src = "src/images/slingS.png";
+        this.lives = new Image();
+        this.lives.src = "src/images/angered-birdy.png"
     }
 
     kickOffLaunchDirection(angleVal, magnitudeVal) {
@@ -17,6 +19,7 @@ class Projectile {
         this.objectLaunched.objectType.velX = magnitudeVal * Math.cos(angle);
         this.objectLaunched.objectType.transfer = 0.8;
         this.launchedObjects.push(this.objectLaunched);
+        this.updateLives();
     }
 
     update() {
@@ -39,6 +42,22 @@ class Projectile {
             let currentBird = this.launchedObjects[i].objectType;
             currentBird.render();
         }
+    }
+
+    updateLives() {
+        this.birdProperties.playerLives -= 1
+    }
+
+    renderLives() {
+        for (let i = 10; i < this.birdProperties.playerLives * 50; i+=50) {
+            this.ctx.beginPath();
+            this.ctx.drawImage(this.lives, i , 50, 30, 30)
+            this.ctx.closePath();
+        }
+    }
+
+    lostAllProjectileObjects() {
+        return (this.birdProperties.playerLives === 0 && this.currentProjectileObject.state === "endState");
     }
 }
 

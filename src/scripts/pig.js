@@ -17,10 +17,9 @@ class Pig {
         this.pig.src = "src/images/peppa.png";
         this.state = "alive";
 
-        this.poofAnimation = this.poofAnimation.bind(this);
         this.poof = new Image();
         this.poof.src = "src/images/poof.png";
-        this.startTime;
+        this.startTimer;
     }
 
     render() {
@@ -63,27 +62,18 @@ class Pig {
         }
     }
 
-    poofAnimation() {
+    poofAnimationTimerBoolean() {
         this.pig.src = "src/images/poof.png";
-        this.radius = 30;
+        this.radius = 35;
 
-
-        // const that = this;
-        // var timestamp = new Date().getTime();
-        // if (this.start === undefined) {
-        //     this.start = timestamp;
-        // }
-        // const elapsed = timestamp - this.start;
-
-        // this.ctx.beginPath();
-        // this.ctx.drawImage(this.poof, this.x - this.radius, this.y - this.radius, 100, 100);
-        // this.ctx.closePath();
-        
-        // if (elapsed < 3000) {
-        //     window.requestAnimationFrame(function(timestamp) {
-        //         that.poofAnimation(timestamp)
-        //     })
-        // }
+        var timestamp = new Date().getTime();
+        if (this.startTimer === undefined) {
+            this.startTimer = timestamp;
+        }
+        const elapsed = timestamp - this.startTimer;
+        if (elapsed > 3000) {
+            return true;
+        }
     }
 }
 

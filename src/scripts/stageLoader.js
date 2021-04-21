@@ -49,8 +49,18 @@ class StageLoader {
         this.loadStage(currentStageValues);
     }
 
+    restartEntities() {
+        this.score = 0;
+        this.startPosBird = [];
+        this.projectileObject.birdProperties.playerLives = this.startingLives;
+        this.projectileObject = {};
+        this.pigs = [];
+        this.blocks = [];
+    }
+
     loadStage(currentStageValues) {
         this.projectileObject = new Projectile(this.ctx, currentStageValues["birdProperties"]);
+        this.startingLives = currentStageValues["birdProperties"].playerLives;
         this.startPosBird = [currentStageValues["birdProperties"].x, currentStageValues["birdProperties"].y]
         this.currentLevelHighScoreKey = currentStageValues["currentLevelHighScoreKey"];
 
@@ -87,7 +97,6 @@ class StageLoader {
         for (let i = 0; i < this.blocks.length; i++) {
             this.blocks[i].update();
         }
-        // this.updateRoundLives();
         if (this.projectileObject.currentProjectileObject) this.updatePigsLeft();
         this.updateHighScore();
     }
@@ -99,19 +108,12 @@ class StageLoader {
         }
     }
 
-    updateRoundLives() {
-        for (let i = 0; i < this.pigs.length; i++) {
-            if (this.projectileObject.currentProjectileObject && checkBirdAndPigState(this.projectileObject.currentProjectileObject.state, this.pigs[i].state)) {
-                alert("s");
-            }
-        }
-    }
-
     updatePigsLeft() {
         for (let i = 0; i < this.pigs.length; i++) {
             if (checkBirdAndPigState(this.projectileObject.currentProjectileObject.state, this.pigs[i].state)) {
-                this.pigs[i].poofAnimation();
-                // this.pigs.splice(i, 1);
+                if (this.pigs[i].poofAnimationTimerBoolean()) {
+                    this.pigs.splice(i, 1);
+                }
             }
         }
     }
@@ -132,7 +134,8 @@ class StageLoader {
     }
 
     renderEntities() {
-        this.projectileObject.render()
+        this.projectileObject.render();
+        this.projectileObject.renderLives();
         for (let i = 0; i < this.pigs.length; i++) {
             this.pigs[i].render();
         }
@@ -186,6 +189,10 @@ class StageLoader {
         this.ctx.font = 30 + "px Bangers";
         this.ctx.fillText("Level " + this.stageNumber, 10, 10)
         this.ctx.strokeText("Level " + this.stageNumber,  10, 10);
+    }
+
+    checkStageLost() {
+        return this.projectileObject.lostAllProjectileObjects()
     }
 }
 

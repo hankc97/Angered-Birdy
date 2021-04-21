@@ -17,7 +17,7 @@ export const stageKeys = {
         "numberOfBlocks": 2,
         "blockProperites": {
             0 : {
-                x: 350,
+                x: 1000,
                 y: 700,
                 w: 30,
                 h: 100,
@@ -30,6 +30,7 @@ export const stageKeys = {
             }
         },
         "birdProperties": {
+            playerLives: 3,
             x: 120,
             y: 630,
             rad: 14,

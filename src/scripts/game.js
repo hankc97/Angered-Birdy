@@ -4,21 +4,26 @@ import StageLoader from "./stageLoader";
 
 class AngeredBirds {
     constructor() {
-        this.animating = true;
+        this.start = this.start.bind(this);
     }
 
     start() {
-        this.canvas = new Canvas()
+        const that = this;
+        this.animating = true;
+        this.canvas = new Canvas();
         this.canvas.bindCanvasToDOM();
         this.initializeEntities();
-        const animation = () => {
+        this.animation = () => {
             this.canvas.clearCanvas();
             if (this.animating) {
                 this.stageLoader.update();
-                window.requestAnimationFrame(animation);
+                this.interval = window.requestAnimationFrame(this.animation);
+                if (that.stageLoader.checkStageLost()) {
+                    that.gameOver();
+                }
             }
         }
-        window.requestAnimationFrame(animation);
+        window.requestAnimationFrame(this.animation);
     }
 
     initializeEntities() {
@@ -27,9 +32,13 @@ class AngeredBirds {
         this.stageLoader.initializeEventListeners();
     }
 
+    winLevel() {
+        // increase stageLoader.stageNumber += 1;
+    }
+
     gameOver() {
-        // restart Game, after certain birdy shots
-        // drop eventListeners and reattach DOM canvas node
+        this.stageLoader.restartEntities();
+        this.stageLoader.initializeEntities();
     }
 }
 
