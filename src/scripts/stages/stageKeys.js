@@ -9,7 +9,7 @@ export const stageKeys = {
                 rad: 15,
             },
             1 : {
-                x: 600,
+                x: 1200,
                 y: 600,
                 rad: 15,
             }

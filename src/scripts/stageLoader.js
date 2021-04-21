@@ -4,6 +4,7 @@ import Projectile from "./projectile";
 import {stageKeys} from "./stages/stageKeys";
 import {checkBirdOnPigCollision, checkBirdOnBlockCollision} from "./util/collisionDetectionUtil";
 import {birdOnPigCollisionLogic, birdOnBlockCollisionLogic} from "./util/collisionLogicUtil";
+import {checkBirdAndPigState} from "./util/stateLogic";
 
 class StageLoader {
     constructor(ctx) {
@@ -83,16 +84,35 @@ class StageLoader {
         for (let i = 0; i < this.pigs.length; i++) {
             this.pigs[i].update();
         }
-        for (let i = 0; i < this.pigs.length; i++) {
+        for (let i = 0; i < this.blocks.length; i++) {
             this.blocks[i].update();
         }
-        this.updateHighScore()
+        // this.updateRoundLives();
+        if (this.projectileObject.currentProjectileObject) this.updatePigsLeft();
+        this.updateHighScore();
     }
 
     updateHighScore() {
         if (this.score > this.highScore) {
             this.highScore = this.score;
             localStorage.setItem(this.currentLevelHighScoreKey, this.highScore);
+        }
+    }
+
+    updateRoundLives() {
+        for (let i = 0; i < this.pigs.length; i++) {
+            if (this.projectileObject.currentProjectileObject && checkBirdAndPigState(this.projectileObject.currentProjectileObject.state, this.pigs[i].state)) {
+                alert("s");
+            }
+        }
+    }
+
+    updatePigsLeft() {
+        for (let i = 0; i < this.pigs.length; i++) {
+            if (checkBirdAndPigState(this.projectileObject.currentProjectileObject.state, this.pigs[i].state)) {
+                this.pigs[i].poofAnimation();
+                // this.pigs.splice(i, 1);
+            }
         }
     }
 
@@ -116,7 +136,7 @@ class StageLoader {
         for (let i = 0; i < this.pigs.length; i++) {
             this.pigs[i].render();
         }
-        for (let i = 0; i < this.pigs.length; i++) {
+        for (let i = 0; i < this.blocks.length; i++) {
             this.blocks[i].render();
         }
         this.renderScore();
