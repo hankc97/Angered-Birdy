@@ -1,3 +1,4 @@
+// Block Collision Detection from https://stackoverflow.com/questions/36784456/calculating-angular-velocity-after-a-collision
 class Block {
     constructor(ctx, x, y, w, h) {
         this.ctx = ctx;
