@@ -8,11 +8,14 @@ class Projectile {
         this.projectileImage = new Image();
         this.projectileImage.src = "src/images/slingS.png";
         this.lives = new Image();
-        this.lives.src = "src/images/angered-birdy.png"
+        this.lives.src = "src/images/angered-birdy.png";
+        this.lastLiveTimer;
+        this.indicatorImage = new Image();
+        this.indicatorImage.src = "src/images/indictor.png";
     }
 
     kickOffLaunchDirection(angleVal, magnitudeVal) {
-        let angle = Math.PI* angleVal /180;
+        let angle = Math.PI * angleVal / 180;
         this.currentProjectileObject = new Bird(this.ctx, this.birdProperties);
         this.objectLaunched = new ObjectLaunch(this.ctx, this.currentProjectileObject);
         this.objectLaunched.objectType.velY =- magnitudeVal * Math.sin(angle);
@@ -37,7 +40,7 @@ class Projectile {
     }
 
     render() {
-        this.ctx.drawImage(this.projectileImage, this.birdProperties.x - 30, this.birdProperties.y - 50, 75, 140);
+        this.ctx.drawImage(this.projectileImage, this.birdProperties.x - 33, this.birdProperties.y - 20, 75, 140);
         for (let i = 0; i < this.launchedObjects.length; i++) {
             let currentBird = this.launchedObjects[i].objectType;
             currentBird.render();
@@ -56,8 +59,24 @@ class Projectile {
         }
     }
 
+    renderIndictor() {
+        if (!this.currentProjectileObject) {
+            this.ctx.drawImage(this.indicatorImage, this.birdProperties.x - 85 , this.birdProperties.y  - 35, 140, 140 )
+        }
+    }
+
     lostAllProjectileObjects() {
-        return (this.birdProperties.playerLives === 0 && this.currentProjectileObject.state === "endState");
+        if (this.birdProperties.playerLives === 0 && this.currentProjectileObject.state === "endState") {
+            var timestamp = new Date().getTime();
+            if (this.lastLiveTimer === undefined) {
+                this.lastLiveTimer = timestamp;
+            }
+
+            const elapsed = timestamp - this.lastLiveTimer;
+            if (elapsed > 4000) {
+                return true;
+            }
+        }
     }
 }
 

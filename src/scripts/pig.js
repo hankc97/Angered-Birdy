@@ -9,12 +9,12 @@ class Pig {
         this.mass = 2;
 
         this.gravity = { x: 0, y: 0.1 };
-        this.ground = this.ctx.canvas.height - 20;
+        this.ground = this.ctx.canvas.height - 30;
         this.bounce = 0.4;
         this.frictionX = 0.9;
         this.mass = 2;
         this.pig = new Image();
-        this.pig.src = "src/images/peppa.png";
+        this.pig.src = "src/images/piggy.png";
         this.state = "alive";
 
         this.poof = new Image();

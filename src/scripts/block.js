@@ -17,15 +17,15 @@ class Block {
         this.WALL_NORMS = [ Math.PI / 2, Math.PI, -(Math.PI / 2), 0]
         this._ground = this.canvas.height - 105;
         this.mass = this.getMass()
+        this.block = new Image();
+        this.block.src = "src/images/woodenBox.png";
     }
 
     render() {
         this.ctx.save()
         this.ctx.setTransform(1,0,0,1,this.x,this.y);
         this.ctx.rotate(this.r);
-        this.ctx.fillStyle = "Blue";
-        this.ctx.fillRect(-this.w/2, -this.h/2, this.w, this.h)
-        this.ctx.strokeRect(-this.w/2, -this.h/2, this.w, this.h)
+        this.ctx.drawImage(this.block, -this.w/2, -this.h/2, this.w, this.h)
         this.ctx.restore()
     }
 

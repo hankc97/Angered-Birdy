@@ -16,6 +16,8 @@ class StageLoader {
         this.projectileObject = {};
         this.pigs = [];
         this.blocks = [];
+        this.clickedImage = new Image();
+        this.clickedImage.src = "src/images/poof.png"
     }
     
     update() {
@@ -40,7 +42,8 @@ class StageLoader {
                 let thetaRadian = Math.atan2(deltaY, deltaX);
                 let angleVal = -((Math.abs(thetaRadian * 180 / Math.PI) - 270) % 90);
                 let magnitudeVal = (Math.abs(mouse.x - 130) / 2);
-                this.projectileObject.kickOffLaunchDirection(angleVal , magnitudeVal)
+                console.log(mouse.x, mouse.y);
+                this.projectileObject.kickOffLaunchDirection(angleVal , magnitudeVal);
             }
         }.bind(this))
     }
@@ -60,6 +63,8 @@ class StageLoader {
     }
 
     loadStage(currentStageValues) {
+        this.background = new Image();
+        this.background.src = currentStageValues["backGroundImageKey"];
         this.projectileObject = new Projectile(this.ctx, currentStageValues["birdProperties"]);
         this.startingLives = currentStageValues["birdProperties"].playerLives;
         this.startPosBird = [currentStageValues["birdProperties"].x, currentStageValues["birdProperties"].y]
@@ -135,7 +140,9 @@ class StageLoader {
     }
 
     renderEntities() {
+        this.renderBackground();
         this.projectileObject.render();
+        this.projectileObject.renderIndictor();
         this.projectileObject.renderLives();
         for (let i = 0; i < this.pigs.length; i++) {
             this.pigs[i].render();
@@ -192,13 +199,18 @@ class StageLoader {
         this.ctx.strokeText("Level " + this.stageNumber,  10, 10);
     }
 
-    checkStageLost() {
-        return this.projectileObject.lostAllProjectileObjects()
+    renderBackground() {
+        this.ctx.drawImage(this.background, 0, 0, this.canvas.width, this.canvas.height);
     }
 
     checkStageWon() {
         return this.pigs.length === 0; 
     }
+
+    checkStageLost() {
+        return this.projectileObject.lostAllProjectileObjects()
+    }
+
 }
 
 export default StageLoader;

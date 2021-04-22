@@ -19,10 +19,11 @@ class AngeredBirds {
                 this.stageLoader.update();
                 this.interval = window.requestAnimationFrame(this.animation);
                 if (that.stageLoader.checkStageWon()) {
-                    debugger
                     that.winLevel()
                 };
-                if (that.stageLoader.checkStageLost()) that.gameOver();
+                if (that.stageLoader.checkStageLost()) {
+                    that.gameOver()
+                };
             }
         }
         window.requestAnimationFrame(this.animation);
