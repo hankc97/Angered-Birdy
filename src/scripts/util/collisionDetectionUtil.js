@@ -1,5 +1,5 @@
 // ball collision detection from https://burakkanber.com/blog/modeling-physics-javascript-gravity-and-drag/
-// block https://codereview.stackexchange.com/questions/192477/circle-line-segment-collision
+// block https://codereview.stackexchange.com/questions/192477/circle-line-segment-collisions
 export const checkBirdOnPigCollision = (currentProjectileObject, pig) => {
     if (currentProjectileObject.x + currentProjectileObject.radius + pig.radius > pig.x
         && currentProjectileObject.x < pig.x + currentProjectileObject.radius + pig.radius
