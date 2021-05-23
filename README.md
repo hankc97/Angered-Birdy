@@ -43,7 +43,7 @@ Angered Birds is a Projectile and Destruction game that includes real time physi
 ------
 ## Launching with Bird Collision and Physical Properties
 The Bird can be adjusted based off the pull for its magnitude and angle. The further it pulled back the further the bird will go based off the magnitude. 
-Once the bird collides with the bird, it will gain points and cause the pig to enter a "dead" state which would enable the animation
+Once the bird collides with a pig, it will gain points and cause the pig to enter a "dead" state which would enable the animation
 
 ![](https://media0.giphy.com/media/wsmfIv9TPA9tdURNyi/giphy.gif?cid=790b7611243d16285e4591c433708976e6aef4c791cd02d6&rid=giphy.gif&ct=g)
 
