@@ -1,6 +1,6 @@
 
 # Angered Birds
-======
+=======
 
 [Live Website](https://hankc97.github.io/Angered-Birdy/)
 
