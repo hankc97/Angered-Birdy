@@ -22,13 +22,10 @@ Angered Birds is a Projectile and Destruction game that includes real time physi
 ### Technologies
 ------
 Packaging
-
 * Webpack
-UI / Styling
-
+UI and Styling
 * SASS
-Logic / Display
-
+Logic and Display
 * Vanilla Javascript
 * Canvas (no game engine)
 
