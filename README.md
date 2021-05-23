@@ -1,6 +1,7 @@
 
 # Angered Birds
 ======
+
 [Live Website](https://hankc97.github.io/Angered-Birdy/)
 
 ### Features
@@ -21,10 +22,13 @@ Angered Birds is a Projectile and Destruction game that includes real time physi
 ### Technologies
 ------
 Packaging
+
 * Webpack
 UI / Styling
+
 * SASS
 Logic / Display
+
 * Vanilla Javascript
 * Canvas (no game engine)
 
