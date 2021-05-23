@@ -29,8 +29,14 @@ Logic / Display
 * Canvas (no game engine)
 
 ### WireFrames / Website Structure
-![wireframe](https://user-images.githubusercontent.com/70183272/119266709-d44b9880-bbb9-11eb-99ac-107f7f99b306.png)
-
+------
+![wireframe](https://user-images.githubusercontent.com/70183272/119266785-212f6f00-bbba-11eb-84da-859c62236452.png)
+1) Game.js will kick off game recursive loop to load entities
+2) StageLoader will take in key, value pairs to load all starting positions of objects and highscore
+3) Each Object pig, block, and bird will load their constructor properties first to display all object locations prelaunch
+4) The Projectile Object will load the bird type and wait for the player to launch the bird
+5) Once properties are loaded, the update and render cycle will be triggered for each property, constantly checking for collision detection and movement based off bird launch
+6) The cycle will run continuosly until the player has run out of birds or the field has run out of pigs which will trigger a stage reset or stage advancement
 
 ### Website Features
 ------
@@ -40,7 +46,9 @@ Once the bird collides with the bird, it will gain points and cause the pig to e
 
 ![](https://media0.giphy.com/media/wsmfIv9TPA9tdURNyi/giphy.gif?cid=790b7611243d16285e4591c433708976e6aef4c791cd02d6&rid=giphy.gif&ct=g)
 
-
+## Different Stages and Stage loss / win detection
+Ability to advance to the next stage when all the pigs are in their 'dead' state.
+![](https://media0.giphy.com/media/FnMgnary56SGBb1joo/giphy.gif?cid=790b7611f684c9f3cb8f27131cde1e10cf7e7493a7a65bd0&rid=giphy.gif&ct=g)
 
 
 
