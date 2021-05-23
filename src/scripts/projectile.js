@@ -73,7 +73,7 @@ class Projectile {
             }
 
             const elapsed = timestamp - this.lastLiveTimer;
-            if (elapsed > 4000) {
+            if (elapsed > 500) {
                 return true;
             }
         }
